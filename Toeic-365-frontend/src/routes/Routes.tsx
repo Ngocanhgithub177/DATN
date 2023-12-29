@@ -8,6 +8,7 @@ import ExamIntroRoutes from "./ExamIntroRoutes";
 import FullExamRoutes from "./FullExamRoutes";
 import TestOnlineRoutes from "./TestOnlineRoutes";
 import Profile from "./Profile";
+import HistoryRoutes from "./HistoryRoutes";
 
 export default function Routes() {
     return (
@@ -20,6 +21,7 @@ export default function Routes() {
             <ExamIntroRoutes />
             <FullExamRoutes />
             <DefaultAdminRoutes />
+            <HistoryRoutes/>
         </BrowserRouter>
     )
 }

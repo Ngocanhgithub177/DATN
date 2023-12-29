@@ -66,8 +66,8 @@ function Login() {
                             </div>
                         </div>
                         <div className="col-md-4 auth-form">
-                            <h2 className="card-title font-weight-bold mb-1"> Welcome to Toeic365! 👋 </h2>
-                            <p className="card-text mb-2"> Please sign-in to your account and start the adventure </p>
+                            <h2 className="card-title font-weight-bold mb-1"> Chào mừng đến với Toeic365! 👋 </h2>
+                            <p className="card-text mb-2"> Vui lòng đăng nhập vào tài khoản của bạn và bắt đầu trải nghiệm. </p>
                             <form action="" onSubmit={handleSubmit(onSubmit)} className="auth-login-form mt-4">
                                 <div className="form-group">
                                     <label htmlFor="Email">Email</label>
@@ -85,11 +85,11 @@ function Login() {
                                         </span>
                                     </span>
                                 </fieldset>
-                                <button type="submit" tabIndex={4} className="btn btn-primary btn-block"> Sign in</button>
+                                <button type="submit" tabIndex={4} className="btn btn-primary btn-block"> ĐĂNG NHẬP</button>
                             </form>
                             <p className="card-text text-center mt-4">
-                                <span>New on our platform?</span>
-                                <Link to="./register" className="" target="_self"><span> Create an account</span></Link>
+                                <span>Bạn chưa có tài khoản ?</span>
+                                <Link to="./register" className="" target="_self"><span> Tạo tài khoản mới</span></Link>
                             </p>
                         </div>
                     </div>

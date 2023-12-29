@@ -4,7 +4,7 @@ export const AdminFooter = () => {
     return (
         <div className="layout-footer">
             <span className="float-md-left d-block d-md-inline-block mt-25">
-                COPYRIGHT © 2021{" "}
+                COPYRIGHT © 2023{" "}
                 <a href="https://1.envato.market/pixinvent_portfolio" rel="noopener" target="_blank" className="ml-25">
                     Toeic365
                 </a>

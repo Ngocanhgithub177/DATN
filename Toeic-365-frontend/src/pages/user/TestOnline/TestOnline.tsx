@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import * as ExamApi from "../../../apis/ExamApi";
-
+import * as HistoryApi from "../../../apis/HistoryApi";
 import "./library/bootstrap.min.scoped.css";
 import "./library/bootstrap";
 import "./TestOnline.scoped.css";
@@ -11,11 +11,20 @@ import NavbarComponent from "../../../components/user/home/navbar.component";
 function TestOnline() {
 
     const [exam, setExam]: any = useState([]);
+    const [examList, setExamList]: any = useState([]);
     const getAllExam = async () => {
         try {
             const response = await ExamApi.getAllExam();
-
             setExam(response.data);
+        } catch (error) {
+            console.log(error.message);
+        }
+    };
+
+    const getExamHistory= async () => {
+        try {
+            const response = await HistoryApi.getAll();
+            setExamList(response.data);
         } catch (error) {
             console.log(error.message);
         }
@@ -23,6 +32,11 @@ function TestOnline() {
 
     useEffect(() => {
         getAllExam();
+    }, [])
+
+    useEffect(() => {
+        getExamHistory();
+        console.log(examList)
     }, [])
 
     return (
@@ -40,7 +54,7 @@ function TestOnline() {
                         <div className="testfullwrap">
                             <div className="testfullwrapinner testfullwrap_one">
                                 <span className="testfullonetwo testfull-one">TEST FULL</span>
-                                <span className="testfullonetwo testfull-two">LISTEN + READING</span>
+                                <span className="testfullonetwo testfull-two">LISTENING + READING</span>
                             </div>
                             <div className="testfullwrapinner testfullwrap_two">
                                 <span className="testfullonetwo testfull-one">KIỂM TRA ĐẦY ĐỦ</span>
@@ -54,8 +68,8 @@ function TestOnline() {
                             exam.map((element: any, index: number) => {
                                 return (
                                     <>
-                                        <div className="col-sm-3" key={element.id}>
-                                            <div className="toeic-item toeic-item-1">
+                                        <div className="col-sm-3" key={element.id} >
+                                            <div className="toeic-item toeic-item-1" style={examList.find((n: any) => n.examName === element.examName) ? {backgroundColor:'red'} : {backgroundColor:'white'}}>
                                                 <Link to={`toeictest/introtest/2021/${element.id}`}
                                                       className="link-wrap">
                                                     <div className="image image-center">
@@ -112,7 +126,7 @@ function TestOnline() {
                     </section>
                 </div>
                 <div className="text-center p-3" style={{backgroundColor: 'rgba(0, 0, 0, 0.2)'}}>
-                    © 2021 Copyright:
+                    © 2023 Copyright:
                     <Link className="text-white" to="#"> Toeic365.com</Link>
                 </div>
             </footer>

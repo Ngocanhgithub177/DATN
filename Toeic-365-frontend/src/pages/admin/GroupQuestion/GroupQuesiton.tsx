@@ -286,7 +286,7 @@ export const GroupQuestion = () => {
 
     const header = (
         <div className="table-header">
-            <h5 className="p-m-0">Quản lý nhóm câu hỏi</h5>
+            <h5 className="p-m-0">QUẢN LÝ NHÓM CÂU HỎI</h5>
             <span className="p-input-icon-left">
                 <i className="pi pi-search" />
                 <InputText type="search" onInput={(e: any) => setGlobalFilter(e.target.value)} placeholder="Tìm kiếm..." />
@@ -335,13 +335,13 @@ export const GroupQuestion = () => {
                         rowsPerPageOptions={[5, 10, 25]}
                         className="datatable-responsive"
                         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                        currentPageReportTemplate="Hiển thị {first} đến {last} trong tổng số {totalRecords} câu hỏi nhóm"
+                        currentPageReportTemplate="Hiển thị {first} đến {last} trong tổng số {totalRecords} nhóm câu hỏi"
                         globalFilter={globalFilter}
-                        emptyMessage="Không tìm thấy câu hỏi nhóm nào."
+                        emptyMessage="Không tìm thấy nhóm câu hỏi nào."
                         header={header}
                     >
                         <Column selectionMode="multiple" headerStyle={{ width: "3rem" }} />
-                        <Column field="numberPart" header="Số Phần" />
+                        <Column field="numberPart" header="Thứ tự phần thi " />
                         <Column field="title" header="Tiêu Đề" />
                         <Column field="groupQuestionDesc" header="Mô Tả" body={descriptionBody} />
                         <Column field="groupQuestionImg" header="Hình Ảnh" />
@@ -350,20 +350,20 @@ export const GroupQuestion = () => {
                         <Column field="action" header="Hành Động" body={actionBodyTemplate} />
                     </DataTable>
 
-                    <Dialog visible={groupQuestionDialog} style={{ width: "450px" }} header="Chi Tiết Câu Hỏi Nhóm" modal
+                    <Dialog visible={groupQuestionDialog} style={{ width: "450px" }} header="CHI TIẾT NHÓM CÂU HỎI" modal
                         className="p-fluid" footer={groupQuestionDialogFooter} onHide={hideDialog}>
                         <div className="p-field">
-                            <label htmlFor="numberPart">Số Phần</label>
+                            <label htmlFor="numberPart">Thứ tự phần thi</label>
                             <Dropdown id="numberPart" disabled={type === 'update'} value={numberPartItem}
                                 onChange={(e) => handleNumberPartChange(e, "numberPart")}
                                 options={numberPartItems} optionLabel="numberPart"
-                                placeholder={isUpdate ? groupQuestion.numberPart : "Chọn Một"} autoFocus
+                                placeholder={isUpdate ? groupQuestion.numberPart : "Chọn một"} autoFocus
                                 className={classNames({ "p-invalid": submitted && !groupQuestion.numberPart })} />
                             {submitted && !groupQuestion.numberPart &&
-                                <small className="p-invalid" style={{ color: '#f44336' }}>Số phần là bắt buộc.</small>}
+                                <small className="p-invalid" style={{ color: '#f44336' }}>Thứ tự phần thi là bắt buộc.</small>}
                         </div>
                         <div className="p-field">
-                            <label htmlFor="title">Tiêu Đề</label>
+                            <label htmlFor="title">Tiêu đề</label>
                             <InputText id="title" value={groupQuestion.title}
                                 onChange={(e) => onInputChange(e, "title")} required
                                 className={classNames({ "p-invalid": submitted && !groupQuestion.title })} />
@@ -371,13 +371,13 @@ export const GroupQuestion = () => {
                                 <small className="p-invalid" style={{ color: '#f44336' }}>Tiêu đề là bắt buộc.</small>}
                         </div>
                         <div className="p-field">
-                            <label htmlFor="groupQuestionDesc">Mô Tả</label>
+                            <label htmlFor="groupQuestionDesc">Mô tả</label>
                             <CKEditor editor={ClassicEditor} data={groupQuestion.groupQuestionDesc}
                                 id="groupQuestionDesc" name="groupQuestionDesc"
                                 onChange={(e: any, editor: any) => onDescriptionChange(e, editor, "groupQuestionDesc")} />
                         </div>
                         <div className="p-field">
-                            <label htmlFor="groupQuestionMedia">Câu Hỏi Nhóm</label> <br />
+                            <label htmlFor="groupQuestionMedia">Nhóm câu hỏi</label> <br />
                             <Checkbox checked={checkedAudio} onChange={e => handleChooseAudio(e)} /> Âm thanh <br />
                             <Checkbox checked={checkedImage} onChange={e => handleChooseImage(e)} /> Hình ảnh <br />
                             <Checkbox checked={checkedParagraph} onChange={e => handleChooseParagraph(e)} /> Đoạn văn
@@ -388,7 +388,7 @@ export const GroupQuestion = () => {
                                 uploadHandler={(e: any) => handleUploadFile(e, "audio")} />
                         </div> : <></>}
                         {isImage ? <div className="p-field">
-                            <label htmlFor="groupQuestionImg">Hình Ảnh</label>
+                            <label htmlFor="groupQuestionImg">Hình ảnh</label>
                             <FileUpload name="groupQuestionImg" accept="image/*" maxFileSize={250000000} customUpload
                                 uploadHandler={(e: any) => handleUploadFile(e, "groupQuestionImg")} />
                         </div> : <></>}

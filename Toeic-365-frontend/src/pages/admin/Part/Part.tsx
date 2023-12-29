@@ -224,7 +224,7 @@ export const Part = () => {
 
     const header = (
         <div className="table-header">
-            <h5 className="p-m-0">Quản lý phần thi</h5>
+            <h5 className="p-m-0">QUẢN LÝ PHẦN THI</h5>
             <span className="p-input-icon-left">
                 <i className="pi pi-search" />
                 <InputText type="search" onInput={(e: any) => setGlobalFilter(e.target.value)} placeholder="Tìm kiếm..." />
@@ -250,32 +250,32 @@ export const Part = () => {
                         rowsPerPageOptions={[5, 10, 25]}
                         className="datatable-responsive"
                         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                        currentPageReportTemplate="Hiển thị {first} đến {last} của {totalRecords} bộ phận"
+                        currentPageReportTemplate="Hiển thị {first} đến {last} của {totalRecords} phần thi"
                         globalFilter={globalFilter}
-                        emptyMessage="Không tìm thấy bộ phận nào."
+                        emptyMessage="Không tìm thấy phần thi nào."
                         header={header}
                     >
                         <Column selectionMode="multiple" headerStyle={{ width: "3rem" }} />
-                        <Column field="numberPart" header="Số Bộ Phận" />
-                        <Column field="partName" header="Tên Bộ Phận" />
-                        <Column field="partDesc" header="Mô Tả Bộ Phận" body={descriptionBody} />
-                        <Column field="action" header="Hành Động" body={actionBodyTemplate} />
+                        <Column field="numberPart" header="Thứ tự phần thi" />
+                        <Column field="partName" header="Tên phần thi" />
+                        <Column field="partDesc" header="Mô tả phần thi" body={descriptionBody} />
+                        <Column field="action" header="Hành động" body={actionBodyTemplate} />
                     </DataTable>
 
-                    <Dialog visible={partDialog} style={{ width: "450px" }} header="Chi Tiết Bộ Phận" modal className="p-fluid" footer={partDialogFooter} onHide={hideDialog}>
+                    <Dialog visible={partDialog} style={{ width: "450px" }} header="CHI TIẾT PHẦN THI" modal className="p-fluid" footer={partDialogFooter} onHide={hideDialog}>
                         <form>
                             <div className="p-field">
-                                <label htmlFor="numberPart">Số Bộ Phận</label>
+                                <label htmlFor="numberPart">Thứ tự phần thi</label>
                                 <InputText id="numberPart" disabled={type === "update"} value={part.numberPart} onChange={(e) => onInputChange(e, "numberPart")} autoFocus={true} className={classNames({ "p-invalid": submitted && !part.numberPart })} />
-                                {submitted && !part.numberPart && <small className="p-invalid" style={{ color: '#f44336' }}>Số bộ phận là bắt buộc.</small>}
+                                {submitted && !part.numberPart && <small className="p-invalid" style={{ color: '#f44336' }}>Thứ tự phần thi là bắt buộc.</small>}
                             </div>
                             <div className="p-field">
-                                <label htmlFor="partName">Tên</label>
+                                <label htmlFor="partName">Tên phần thi</label>
                                 <Dropdown value={partNameValue} onChange={(e: any) => handlePartNameChange(e, "partName")} options={partNameValues} optionLabel="partName" placeholder={isUpdate ? part.partName : "Chọn một"} className={classNames({ "p-invalid": submitted && !part.partName })} />
                                 {submitted && !part.partName && <small className="p-invalid" style={{ color: '#f44336' }}>Tên là bắt buộc.</small>}
                             </div>
                             <div className="p-field">
-                                <label htmlFor="partDesc">Mô Tả</label>
+                                <label htmlFor="partDesc">Mô tả phần thi</label>
                                 <CKEditor style={{ width: "420px" }} editor={ClassicEditor} id="partDesc" data={part.partDesc} name="partDesc" onChange={(e: any, editor: any) => handleChangeDesc(e, editor, "partDesc")} className={classNames({ "p-invalid": submitted && !part.partDesc })} />
                                 {submitted && !part.partDesc && <small className="p-invalid" style={{ color: '#f44336' }}>Mô tả là bắt buộc.</small>}
                             </div>

@@ -88,7 +88,7 @@ export const DefaultAdmin = () => {
     };
 
     const menu = [
-        {label: "Dashboard", icon: "pi pi-fw pi-home", to: "/admin"},
+        {label: "Báo Cáo Thống Kê", icon: "pi pi-fw pi-home", to: "/admin"},
         {label: "Quản Lý Đề Thi", icon: "pi pi-fw pi-book", to: "/admin/exam"},
         {label: "Quản Lý Phần Thi", icon: "pi pi-fw pi-list", to: "/admin/part"},
         {label: "Quản Lý Nhóm Câu Hỏi", icon: "pi pi-fw pi-question-circle", to: "/admin/group-question"},

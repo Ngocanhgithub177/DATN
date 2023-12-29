@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {Link, useHistory} from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { Link, useHistory } from "react-router-dom";
 
 import "./bootstrap.min.scoped.css";
 import 'bootstrap/dist/js/bootstrap.js';
@@ -20,7 +20,7 @@ function NavbarComponent() {
             const response = await AccountApi.getCurrentUser();
             setUser(response.data);
             console.log(response.data);
-        } catch (error) {
+        } catch (error : any) {
             console.log(error.message);
         }
     };
@@ -46,25 +46,25 @@ function NavbarComponent() {
                     <nav className="navbar navbar-expand-lg navbar-light">
                         <Link className="navbar-brand" to="#">
                             <img src="https://toeicexamstore.com/websites/images/toeiclogo.png"
-                                 style={{width: "40px", height: "40px"}}
-                                 alt="logo"
+                                style={{ width: "40px", height: "40px" }}
+                                alt="logo"
                             />
                             <b className="ml-3">TOEIC365</b>
                         </Link>
                         <button className="navbar-toggler" type="button" data-toggle="collapse"
-                                data-target="#navbarNav"
-                                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                            <span className="navbar-toggler-icon"/>
+                            data-target="#navbarNav"
+                            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                            <span className="navbar-toggler-icon" />
                         </button>
                         <div className="collapse navbar-collapse" id="navbarNav">
-                            <div className="mr-auto"/>
+                            <div className="mr-auto" />
                             <ul className="navbar-nav">
                                 <li className="nav-item">
-                                    <Link className="nav-link" to="/">home</Link>
+                                    <Link className="nav-link" to="/">Trang chủ</Link>
                                 </li>
 
                                 <li className="nav-item">
-                                    <Link className="nav-link online-link" to="./toeictest">test online</Link>
+                                    <Link className="nav-link online-link" to="./toeictest">Đề thi Online</Link>
                                 </li>
                                 {user ? <>
                                     <li className="nav-item dropdown d-flex">
@@ -72,8 +72,12 @@ function NavbarComponent() {
                                             <Avatar icon="pi pi-user" className="p-mr-2" style={{ backgroundColor: '#9c27b0', color: '#ffffff', marginTop: '-5px' }} shape="circle" />
                                             {user.fullName}
                                         </Link>
+
                                         <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                            {user.roles[0] === 'ROLE_ADMIN' ? <Link className="dropdown-item" to="./admin"><i className="bi bi-person"/> Admin</Link> : <></>}
+                                            {user.roles[0] === 'ROLE_ADMIN' ? <Link className="dropdown-item" to="./admin"><i className="bi bi-person" /> Admin</Link> : <></>}
+                                            {user.roles[0] === 'ROLE_USER' ? <Link className="dropdown-item" to="/history" >
+                                                History
+                                            </Link> : <></>}
                                             <a onClick={handleProfile} className="dropdown-item" ><i className="bi bi-person-fill" /> Profile</a>
                                             <a onClick={handleLogout} className="dropdown-item" href="/"><i className="bi bi-box-arrow-right" /> Sign Out</a>
 
@@ -81,10 +85,10 @@ function NavbarComponent() {
                                     </li>
                                 </> : <>
                                     <li className="nav-item">
-                                        <Link className="btn-danger btn Ripple-parent" id="btn-sign-in" to="./login">sign in</Link>
+                                        <Link className="btn-danger btn Ripple-parent" id="btn-sign-in" to="./login">ĐĂNG NHẬP</Link>
                                     </li>
                                     <li className="nav-item">
-                                        <Link className="btn-sign-up btn btn-outline-danger" to="./register">sign up</Link>
+                                        <Link className="btn-sign-up btn btn-outline-danger" to="./register">ĐĂNG KÝ</Link>
                                     </li>
                                 </>}
                             </ul>

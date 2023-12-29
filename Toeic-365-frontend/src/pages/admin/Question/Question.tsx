@@ -267,7 +267,7 @@ function Question() {
 
     const header = (
         <div className="table-header">
-            <h5 className="p-m-0">Quản lý câu hỏi</h5>
+            <h5 className="p-m-0">QUẢN LÝ CÂU HỎI</h5>
             <span className="p-input-icon-left">
                 <i className="pi pi-search" />
                 <InputText type="search" onInput={(e: any) => setGlobalFilter(e.target.value)} placeholder="Tìm kiếm..." />
@@ -374,22 +374,22 @@ function Question() {
                         header={header}
                     >
                         <Column selectionMode="multiple" headerStyle={{ width: "3rem" }} />
-                        <Column field="numberPart" header="Số Phần" body={numberPartBody} />
-                        <Column field="title" header="Tiêu Đề" body={titleBody} sortable />
-                        <Column field="question-number" header="Số Câu Hỏi" body={questionNumberBody} />
-                        <Column field="question-content" header="Nội Dung Câu Hỏi" body={questionContentBody} />
+                        <Column field="numberPart" header="Thứ tự phần thi" body={numberPartBody} />
+                        <Column field="title" header="Tiêu đề" body={titleBody} sortable />
+                        <Column field="question-number" header="Số câu hỏi" body={questionNumberBody} />
+                        <Column field="question-content" header="Nội dung câu hỏi" body={questionContentBody} />
                         <Column field="image" header="Ảnh" body={imageBody} />
-                        <Column field="answer-list" header="Danh Sách Câu Trả Lời" body={answerListBody} />
-                        <Column field="correct answer" header="Câu Trả Lời Đúng" body={correctAnswerBody} />
-                        <Column field="correct answer" header="Đáp Án Chi Tiết" body={detailedAnswerBody} />
-                        <Column field="action" header="Hành Động" body={actionBodyTemplate} />
+                        <Column field="answer-list" header="Danh sách câu trả lời" body={answerListBody} />
+                        <Column field="correct answer" header="Câu trả lời đúng" body={correctAnswerBody} />
+                        <Column field="correct answer" header="Đáp án chi tiết" body={detailedAnswerBody} />
+                        <Column field="action" header="Hành động" body={actionBodyTemplate} />
 
                     </DataTable>
 
-                    <Dialog visible={questionDialog} style={{ width: "450px" }} header="Chi Tiết Câu Hỏi" modal
+                    <Dialog visible={questionDialog} style={{ width: "450px" }} header="CHI TIẾT CÂU HỎI" modal
                         className="p-fluid" footer={questionDialogFooter} onHide={hideDialog}>
                         <div className="p-field">
-                            <label htmlFor="numberPart">Số Phần</label>
+                            <label htmlFor="numberPart">Thứ tự phần thi</label>
                             <Dropdown id="numberPart" disabled={type === 'update'} value={numberPartItem}
                                 onChange={(e) => handleNumberPartChange(e)} options={numberPartItems}
                                 optionLabel="numberPart"
@@ -400,7 +400,7 @@ function Question() {
                                 <label htmlFor="title">Tiêu Đề Nhóm Câu Hỏi</label>
                                 <Dropdown id="title" value={titleItem}
                                     onChange={(e: any) => handleTitleChange(e, 'title')} options={titleItems}
-                                    optionLabel="title" placeholder="Chọn Một"
+                                    optionLabel="title" placeholder="Chọn một"
                                     className={classNames({ "p-invalid": submitted && !question.title })} />
                                 {submitted && !question.title &&
                                     <small className="p-invalid">tiêu đề nhóm câu hỏi là bắt buộc.</small>}
@@ -408,16 +408,16 @@ function Question() {
                             : <></>
                         }
                         <div className="p-field">
-                            <label htmlFor="groupQuestionMedia">Phương Tiện Câu Hỏi</label> <br />
+                            <label htmlFor="groupQuestionMedia">Phương tiện câu hỏi</label> <br />
                             <Checkbox checked={isCheckedImage} onChange={e => handleChooseImage(e)} /> Ảnh <br />
                         </div>
                         {isChooseImage ? <div className="p-field">
-                            <label htmlFor="questionImg">Hình Ảnh</label>
+                            <label htmlFor="questionImg">Hình ảnh</label>
                             <FileUpload name="questionImg" accept="image/*" maxFileSize={250000000} customUpload
                                 uploadHandler={(e: any) => handleUploadFile(e, "questionImg")} />
                         </div> : <></>}
                         <div className="p-field">
-                            <label htmlFor="questionNumber">Số Câu Hỏi</label>
+                            <label htmlFor="questionNumber">Số câu hỏi</label>
                             <InputNumber id="questionNumber" value={question.questionNumber}
                                 onValueChange={(e: any) => onInputNumberChange(e, "questionNumber")}
                                 className={classNames({ "p-invalid": submitted && !question.questionNumber })} />
@@ -425,7 +425,7 @@ function Question() {
                                 <small className="p-invalid">số câu hỏi là bắt buộc.</small>}
                         </div>
                         <div className="p-field">
-                            <label htmlFor="questionContent">Nội Dung Câu Hỏi</label>
+                            <label htmlFor="questionContent">Nội dung câu hỏi</label>
                             <InputText id="questionContent" value={question.questionContent}
                                 onChange={(e) => handleInputChange(e, "questionContent")}
                                 className={classNames({ "p-invalid": submitted && !question.questionContent })} />
@@ -433,12 +433,12 @@ function Question() {
                                 <small className="p-invalid">nội dung là bắt buộc.</small>}
                         </div>
                         <div className="p-field">
-                            <label htmlFor="detailedAnswer">Đáp Án Chi Tiết</label>
+                            <label htmlFor="detailedAnswer">Đáp án chi tiết</label>
                             <InputText id="detailedAnswer" value={question.detailedAnswer}
                                 onChange={(e) => handleInputChange(e, "detailedAnswer")} />
                         </div>
                         <div className="p-field">
-                            <label htmlFor="image">Danh Sách Câu Trả Lời </label><br />
+                            <label htmlFor="image">Danh sách câu trả lời </label><br />
                             <small>chọn câu trả lời đúng</small>
                             <div className="p-inputgroup">
                                 <span className="p-inputgroup-addon p-inputgroup-addon-checkbox">
@@ -482,7 +482,7 @@ function Question() {
                             <i className="pi pi-exclamation-triangle p-mr-3" style={{ fontSize: "2rem" }} />
                             {question && (
                                 <span>
-                                    Are you sure you want to delete <b>{question.questionNumber}</b>?
+                                    Bạn chắc chắn xóa <b>{question.questionNumber}</b>?
                                 </span>
                             )}
                         </div>

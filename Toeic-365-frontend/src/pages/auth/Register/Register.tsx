@@ -72,11 +72,11 @@ function Register() {
                             </div>
                         </div>
                         <div className="col-md-4 auth-form">
-                            <h2 className="card-title font-weight-bold mb-1">Adventure starts here 🚀</h2>
-                            <p className="card-text mb-2">Make your app management easy and fun!</p>
+                            <h2 className="card-title font-weight-bold mb-1">Cuộc phiêu lưu bắt đầu từ đây 🚀</h2>
+                            <p className="card-text mb-2">Giúp cho việc học tập của bạn trở nên dễ dàng và thú vị!</p>
                             <form onSubmit={handleSubmit(onSubmit)} action="" className="auth-login-form mt-4">
                                 <div className="form-group">
-                                    <label htmlFor="fullName">Full Name</label>
+                                    <label htmlFor="fullName">Họ và tên</label>
                                     <Input tabIndex={1} {...register("fullName")} placeholder="Angela" />
                                     <small className="p-invalid">{errors.fullName?.message}</small>
                                 </div>
@@ -86,20 +86,20 @@ function Register() {
                                     <small className="p-invalid">{errors.email?.message}</small>
                                 </div>
                                 <div className="form-group">
-                                    <label htmlFor="password">Password</label>
+                                    <label htmlFor="password">Mật khẩu</label>
                                     <Input.Password {...register("password")} className="form-input" style={{borderRadius: '.357rem', padding: '.438rem 1rem', backgroundColor: '#fff', backgroundClip: 'padding-box', border: '1px solid #d8d6de'}} tabIndex={3} placeholder="*********" />
                                     <small className="p-invalid">{errors.password?.message}</small>
                                 </div>
                                 <div className="form-group">
-                                    <label htmlFor="confirmPassword">Confirm Password</label>
+                                    <label htmlFor="confirmPassword">Xác thực mật khẩu</label>
                                     <Input.Password tabIndex={4} style={{borderRadius: '.357rem', padding: '.438rem 1rem', backgroundColor: '#fff', backgroundClip: 'padding-box', border: '1px solid #d8d6de'}} {...register("confirmPassword")}  placeholder="*********" />
                                     <small className="p-invalid">{errors.confirmPassword?.message}</small>
                                 </div>
-                                <button type="submit" tabIndex={6} className="btn btn-primary btn-block"> Sign up</button>
+                                <button type="submit" tabIndex={6} className="btn btn-primary btn-block"> ĐĂNG KÝ</button>
                             </form>
                             <p className="card-text text-center mt-4">
-                                <span>Already have an account?</span>
-                                <Link to="./login" className="" target="_self"><span> Sign in instead</span></Link>
+                                <span>Bạn đã sẵn sàng để tạo một tài khoản?</span>
+                                <Link to="./login" className="" target="_self"><span> Đăng nhập ngay</span></Link>
                             </p>
                         </div>
                     </div>

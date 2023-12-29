@@ -16,7 +16,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { css } from "@emotion/core";
 import * as AccountApi from "../../../../../../apis/AccountApi";
 import moment from "moment";
-
+import * as HistoryApi from "../../../../../../apis/HistoryApi";
 const override = css`
   display: block;
   margin: 0 auto;
@@ -80,7 +80,7 @@ function FullExam() {
         return point;*/
 
         let PartOne = 0;
-        for (let i = 1; i < 4; i++) {
+        for (let i = 1; i < 7; i++) {
             const valueChoice = userAnswers["question_" + i];
             if (valueChoice === answerCorrects[i - 1]) {
                 PartOne += 1;
@@ -92,7 +92,7 @@ function FullExam() {
 
     const checkPoint2 = (userAnswers: any, answerCorrects: any) => {
         let PartTwo = 0;
-        for (let i = 4; i < 16; i++) {
+        for (let i = 7; i < 33; i++) {
             const valueChoice = userAnswers["question_" + i];
             if (valueChoice === answerCorrects[i - 1]) {
                 PartTwo += 1;
@@ -104,7 +104,7 @@ function FullExam() {
 
     const checkPoint3 = (userAnswers: any, answerCorrects: any) => {
         let PartThree = 0;
-        for (let i = 16; i < 36; i++) {
+        for (let i = 33; i < 73; i++) {
             const valueChoice = userAnswers["question_" + i];
             if (valueChoice === answerCorrects[i - 1]) {
                 PartThree += 1;
@@ -116,7 +116,7 @@ function FullExam() {
 
     const checkPoint4 = (userAnswers: any, answerCorrects: any) => {
         let PartFour = 0;
-        for (let i = 36; i < 51; i++) {
+        for (let i = 73; i < 103; i++) {
             const valueChoice = userAnswers["question_" + i];
             if (valueChoice === answerCorrects[i - 1]) {
                 PartFour += 1;
@@ -128,7 +128,7 @@ function FullExam() {
 
     const checkPoint5 = (userAnswers: any, answerCorrects: any) => {
         let PartFive = 0;
-        for (let i = 51; i < 81; i++) {
+        for (let i = 103; i < 134; i++) {
             const valueChoice = userAnswers["question_" + i];
             if (valueChoice === answerCorrects[i - 1]) {
                 PartFive += 1;
@@ -140,7 +140,7 @@ function FullExam() {
 
     const checkPoint6 = (userAnswers: any, answerCorrects: any) => {
         let PartSix = 0;
-        for (let i = 81; i < 87; i++) {
+        for (let i = 135; i < 151; i++) {
             const valueChoice = userAnswers["question_" + i];
             if (valueChoice === answerCorrects[i - 1]) {
                 PartSix += 1;
@@ -152,7 +152,7 @@ function FullExam() {
 
     const checkPoint7 = (userAnswers: any, answerCorrects: any) => {
         let PartSeven = 0;
-        for (let i = 87; i < 101; i++) {
+        for (let i = 152; i < 207; i++) {
             const valueChoice = userAnswers["question_" + i];
             if (valueChoice === answerCorrects[i - 1]) {
                 PartSeven += 1;
@@ -302,6 +302,19 @@ function FullExam() {
         }
     }
 
+    const formatTime = (timeDB: any) => {
+        let timeFormat = timeDB.split(':');
+
+        let hours = 0;
+        hours = (parseInt(timeFormat[0]) * 3600000);
+        let minute = 0;
+        minute = (parseInt(timeFormat[1]) * 60000);
+        let seconds = 0;
+        seconds = (parseInt(timeFormat[2]) * 1000);
+        let totalTime = seconds + minute + hours;
+        return totalTime;
+    }
+
     function correctAnswer() {
         let listCorrectAnswer = [];
         for (let i = 1; i < 101; i++) {
@@ -431,6 +444,16 @@ function FullExam() {
 
     }, []);
 
+    const handleSave = async (scoreListening: any, scoreReading: any, hiddenTimer: any) => {
+        let historyExam: any = {
+            'listening_score': scoreListening,
+            'reading_score': scoreReading,
+            'timeOfExam': hiddenTimer,
+            'examID': exam.id
+        }
+        await HistoryApi.create(historyExam);
+    }
+
 
     const handleSubmit = (e: any) => {
         e.preventDefault();
@@ -480,12 +503,16 @@ function FullExam() {
                     setPointListening(pointLis);
                     setPointReading(pointRed);
 
-                    ScoreLis = Math.round((pointLis * 9.9) * 100) / 100;
+                    ScoreLis = Math.round(pointLis * 990) / 100;
                     ScoreRed = Math.round((pointRed * 9.9) * 100) / 100;
 
                     setScoreListening(ScoreLis);
                     setScoreReading(ScoreRed);
-
+                    // @ts-ignore
+                    let timeFormat = hiddenTimer ? hiddenTimer.innerText : 0;
+                    let timeSecond = formatTime(timeFormat / 1000);
+                    // @ts-ignore
+                    handleSave(ScoreLis, ScoreRed, timing() - timeSecond);
                     // @ts-ignore
                     hiddenTimer.setAttribute('style', 'display: none')
                 }
@@ -502,6 +529,11 @@ function FullExam() {
         history.push("/");
     }
 
+    const handleReloadExam = (e: any) => {
+        e.preventDefault();
+        history.goBack();
+    }
+
     const viewDetails = () => {
         setIsShowResult(false);
     }
@@ -514,7 +546,7 @@ function FullExam() {
                     <div className="container">
                         <div className="row test-page">
                             <h4 className="sm black bold part-tile">
-                                <Link to="https://toeic365.com/en"
+                                <Link to="/"
                                     className="logo-h">
                                     <img src="https://toeicexamstore.com/websites/images/toeiclogo.png"
                                         alt="toeic365.com" />
@@ -613,7 +645,7 @@ function FullExam() {
                                                                         </Radio>
                                                                     </Radio.Group>
                                                                 </ul>
-                                                                <div className="accordion" id={accordionId}>
+                                                                {isSubmit && <div className="accordion" id={accordionId}>
                                                                     <div>
                                                                         <div className="card-header" id={`heading-${element.questionNumber}-${index}`}>
                                                                             <h5 className="mb-0">
@@ -638,8 +670,7 @@ function FullExam() {
                                                                         </div>
                                                                     </div>
                                                                 </div>
-
-
+                                                                }
                                                             </div>
                                                         </div>
                                                     )
@@ -665,7 +696,9 @@ function FullExam() {
                                                         src={`${baseUrl()}/fileFolders/${exam.part[1].groupQuestion[0].audio}`} />
                                                 </audio>
                                                 <div className="row">
-                                                    {exam.part[1].groupQuestion[0].question.map((element: any) => {
+                                                    {exam.part[1].groupQuestion[0].question.map((element: any,index : number) => {
+                                                         const collapseId = `collapse-${element.questionNumber}-${index}`;
+                                                         const accordionId = `accordion-${element.questionNumber}-${index}`;
                                                         return (
                                                             <>
                                                                 <input className="hidden" id="correctAnswer"
@@ -722,6 +755,33 @@ function FullExam() {
                                                                                 <br />
                                                                             </Radio.Group>
                                                                         </ul>
+
+                                                                        {isSubmit && <div className="accordion" id={accordionId}>
+                                                                            <div>
+                                                                                <div className="card-header" id={`heading-${element.questionNumber}-${index}`}>
+                                                                                    <h5 className="mb-0">
+                                                                                        <button
+                                                                                            className="btn btn-link finish"
+                                                                                            type="button"
+                                                                                            data-toggle="collapse"
+                                                                                            data-target={`#${collapseId}`}
+                                                                                            aria-expanded="true"
+                                                                                            aria-controls={collapseId}
+                                                                                        >
+                                                                                            <span className="arrow-icon">&#x2b07;</span>
+                                                                                            Xem đáp án chi tiết
+                                                                                        </button>
+                                                                                    </h5>
+                                                                                </div>
+
+                                                                                <div id={collapseId} className="collapse" aria-labelledby={`heading-${element.questionNumber}-${index}`} data-parent={`#${accordionId}`}>
+                                                                                    <div className="card-body">
+                                                                                        Đáp án chi tiết: {element.detailedAnswer}
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        }
                                                                     </div>
                                                                 </> : <></>}
 
@@ -797,7 +857,7 @@ function FullExam() {
                                                                     </Radio.Group>
                                                                 </ul>
                                                             </div>
-                                                            <div className="accordion" id={accordionId}>
+                                                            {isSubmit && <div className="accordion" id={accordionId}>
                                                                 <div>
                                                                     <div className="card-header" id={`heading-${element.questionNumber}-${index}`}>
                                                                         <h5 className="mb-0">
@@ -821,7 +881,7 @@ function FullExam() {
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
+                                                            </div>}
 
                                                         </div>
                                                     )
@@ -884,7 +944,7 @@ function FullExam() {
                                                                     </Radio.Group>
                                                                 </ul>
                                                             </div>
-                                                            <div className="accordion" id={accordionId}>
+                                                            {isSubmit && <div className="accordion" id={accordionId}>
                                                                 <div>
                                                                     <div className="card-header" id={`heading-${element.questionNumber}-${index}`}>
                                                                         <h5 className="mb-0">
@@ -908,7 +968,7 @@ function FullExam() {
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
+                                                            </div>}
                                                         </div>
                                                     )
                                                 })}
@@ -970,7 +1030,7 @@ function FullExam() {
                                                                     </Radio.Group>
                                                                 </ul>
                                                             </div>
-                                                            <div className="accordion" id={accordionId}>
+                                                            {isSubmit && <div className="accordion" id={accordionId}>
                                                                 <div>
                                                                     <div className="card-header" id={`heading-${element.questionNumber}-${index}`}>
                                                                         <h5 className="mb-0">
@@ -995,6 +1055,7 @@ function FullExam() {
                                                                     </div>
                                                                 </div>
                                                             </div>
+                                                            }
                                                         </div>
                                                     )
                                                 })}
@@ -1056,7 +1117,7 @@ function FullExam() {
                                                                     </Radio.Group>
                                                                 </ul>
                                                             </div>
-                                                            <div className="accordion" id={accordionId}>
+                                                            {isSubmit && <div className="accordion" id={accordionId}>
                                                                 <div>
                                                                     <div className="card-header" id={`heading-${element.questionNumber}-${index}`}>
                                                                         <h5 className="mb-0">
@@ -1080,7 +1141,7 @@ function FullExam() {
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
+                                                            </div>}
                                                         </div>
                                                     )
                                                 })}
@@ -1142,7 +1203,7 @@ function FullExam() {
                                                                     </Radio.Group>
                                                                 </ul>
                                                             </div>
-                                                            <div className="accordion" id={accordionId}>
+                                                            {isSubmit && <div className="accordion" id={accordionId}>
                                                                 <div>
                                                                     <div className="card-header" id={`heading-${element.questionNumber}-${index}`}>
                                                                         <h5 className="mb-0">
@@ -1167,6 +1228,7 @@ function FullExam() {
                                                                     </div>
                                                                 </div>
                                                             </div>
+                                                            }
                                                         </div>
                                                     )
                                                 })}
@@ -1228,7 +1290,7 @@ function FullExam() {
                                                                     </Radio.Group>
                                                                 </ul>
                                                             </div>
-                                                            <div className="accordion" id={accordionId}>
+                                                            {isSubmit && <div className="accordion" id={accordionId}>
                                                                 <div>
                                                                     <div className="card-header" id={`heading-${element.questionNumber}-${index}`}>
                                                                         <h5 className="mb-0">
@@ -1252,7 +1314,7 @@ function FullExam() {
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
+                                                            </div>}
                                                         </div>
                                                     )
                                                 })}
@@ -1314,7 +1376,7 @@ function FullExam() {
                                                                     </Radio.Group>
                                                                 </ul>
                                                             </div>
-                                                            <div className="accordion" id={accordionId}>
+                                                            {isSubmit && <div className="accordion" id={accordionId}>
                                                                 <div>
                                                                     <div className="card-header" id={`heading-${element.questionNumber}-${index}`}>
                                                                         <h5 className="mb-0">
@@ -1338,7 +1400,7 @@ function FullExam() {
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
+                                                            </div>}
                                                         </div>
                                                     )
                                                 })}
@@ -1410,7 +1472,7 @@ function FullExam() {
                                                                     </Radio.Group>
                                                                 </ul>
                                                             </div>
-                                                            <div className="accordion" id={accordionId}>
+                                                            {isSubmit && <div className="accordion" id={accordionId}>
                                                                 <div>
                                                                     <div className="card-header" id={`heading-${element.questionNumber}-${index}`}>
                                                                         <h5 className="mb-0">
@@ -1434,7 +1496,7 @@ function FullExam() {
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
+                                                            </div>}
                                                         </div>
                                                     )
                                                 })}
@@ -1496,7 +1558,7 @@ function FullExam() {
                                                                     </Radio.Group>
                                                                 </ul>
                                                             </div>
-                                                            <div className="accordion" id={accordionId}>
+                                                            {isSubmit && <div className="accordion" id={accordionId}>
                                                                 <div>
                                                                     <div className="card-header" id={`heading-${element.questionNumber}-${index}`}>
                                                                         <h5 className="mb-0">
@@ -1520,7 +1582,7 @@ function FullExam() {
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
+                                                            </div>}
                                                         </div>
                                                     )
                                                 })}
@@ -1582,7 +1644,7 @@ function FullExam() {
                                                                     </Radio.Group>
                                                                 </ul>
                                                             </div>
-                                                            <div className="accordion" id={accordionId}>
+                                                            {isSubmit && <div className="accordion" id={accordionId}>
                                                                 <div>
                                                                     <div className="card-header" id={`heading-${element.questionNumber}-${index}`}>
                                                                         <h5 className="mb-0">
@@ -1606,7 +1668,7 @@ function FullExam() {
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
+                                                            </div>}
                                                         </div>
                                                     )
                                                 })}
@@ -1668,7 +1730,7 @@ function FullExam() {
                                                                     </Radio.Group>
                                                                 </ul>
                                                             </div>
-                                                            <div className="accordion" id={accordionId}>
+                                                            {isSubmit && <div className="accordion" id={accordionId}>
                                                                 <div>
                                                                     <div className="card-header" id={`heading-${element.questionNumber}-${index}`}>
                                                                         <h5 className="mb-0">
@@ -1692,7 +1754,7 @@ function FullExam() {
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
+                                                            </div>}
                                                         </div>
                                                     )
                                                 })}
@@ -1754,7 +1816,7 @@ function FullExam() {
                                                                     </Radio.Group>
                                                                 </ul>
                                                             </div>
-                                                            <div className="accordion" id={accordionId}>
+                                                            {isSubmit && <div className="accordion" id={accordionId}>
                                                                 <div>
                                                                     <div className="card-header" id={`heading-${element.questionNumber}-${index}`}>
                                                                         <h5 className="mb-0">
@@ -1779,6 +1841,7 @@ function FullExam() {
                                                                     </div>
                                                                 </div>
                                                             </div>
+                                                            }
                                                         </div>
                                                     )
                                                 })}
@@ -1845,7 +1908,7 @@ function FullExam() {
                                                                     </Radio.Group>
                                                                 </ul>
                                                             </div>
-                                                            <div className="accordion" id={accordionId}>
+                                                            {isSubmit && <div className="accordion" id={accordionId}>
                                                                 <div>
                                                                     <div className="card-header" id={`heading-${element.questionNumber}-${index}`}>
                                                                         <h5 className="mb-0">
@@ -1869,7 +1932,7 @@ function FullExam() {
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
+                                                            </div>}
                                                         </div>
                                                     )
                                                 })}
@@ -1937,7 +2000,7 @@ function FullExam() {
                                                                     </Radio.Group>
                                                                 </ul>
                                                             </div>
-                                                            <div className="accordion" id={accordionId}>
+                                                            {isSubmit && <div className="accordion" id={accordionId}>
                                                                 <div>
                                                                     <div className="card-header" id={`heading-${element.questionNumber}-${index}`}>
                                                                         <h5 className="mb-0">
@@ -1961,7 +2024,7 @@ function FullExam() {
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
+                                                            </div>}
                                                         </div>
                                                     )
                                                 })}
@@ -2020,7 +2083,7 @@ function FullExam() {
                                                                     </Radio.Group>
                                                                 </ul>
                                                             </div>
-                                                            <div className="accordion" id={accordionId}>
+                                                            {isSubmit && <div className="accordion" id={accordionId}>
                                                                 <div>
                                                                     <div className="card-header" id={`heading-${element.questionNumber}-${index}`}>
                                                                         <h5 className="mb-0">
@@ -2044,7 +2107,7 @@ function FullExam() {
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
+                                                            </div>}
                                                         </div>
                                                     )
                                                 })}
@@ -2112,7 +2175,7 @@ function FullExam() {
                                                                     </Radio.Group>
                                                                 </ul>
                                                             </div>
-                                                            <div className="accordion" id={accordionId}>
+                                                            {isSubmit && <div className="accordion" id={accordionId}>
                                                                 <div>
                                                                     <div className="card-header" id={`heading-${element.questionNumber}-${index}`}>
                                                                         <h5 className="mb-0">
@@ -2136,7 +2199,7 @@ function FullExam() {
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
+                                                            </div>}
                                                         </div>
                                                     )
                                                 })}
@@ -2195,7 +2258,7 @@ function FullExam() {
                                                                     </Radio.Group>
                                                                 </ul>
                                                             </div>
-                                                            <div className="accordion" id={accordionId}>
+                                                            {isSubmit && <div className="accordion" id={accordionId}>
                                                                 <div>
                                                                     <div className="card-header" id={`heading-${element.questionNumber}-${index}`}>
                                                                         <h5 className="mb-0">
@@ -2220,6 +2283,7 @@ function FullExam() {
                                                                     </div>
                                                                 </div>
                                                             </div>
+                                                            }
                                                         </div>
                                                     )
                                                 })}
@@ -2296,11 +2360,11 @@ function FullExam() {
                                                                         </h5>
                                                                     </div>
 
-                                                                    <div id={collapseId} className="collapse" aria-labelledby={`heading-${element.questionNumber}-${index}`} data-parent={`#${accordionId}`}>
+                                                                    {isSubmit && <div id={collapseId} className="collapse" aria-labelledby={`heading-${element.questionNumber}-${index}`} data-parent={`#${accordionId}`}>
                                                                         <div className="card-body">
                                                                             Đáp án chi tiết: {element.detailedAnswer}
                                                                         </div>
-                                                                    </div>
+                                                                    </div>}
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -2311,15 +2375,15 @@ function FullExam() {
                                         </form>
 
                                         <div className="card p-fluid">
-                                            <Dialog header="Result" visible={isShowResult}
+                                            <Dialog header="KẾT QUẢ BÀI THI" visible={isShowResult}
                                                 style={{ width: '557px', marginTop: '75px' }} modal
                                                 onHide={() => setIsShowResult(false)}>
-                                                <h4 className="sm"> {user ? `Hi, ${user.fullName}` : <></>} </h4>
-                                               
+                                                <h4 className="sm"> {user ? `Xin chào, ${user.fullName}` : <></>} </h4>
+
                                                 <h4 className="sm">
                                                     {exam ? exam.examName : <></>}
                                                 </h4>
-                                                <i> Thank you for completing the trial tests on TOEIC Exam Store. </i>
+                                                <i> Cảm ơn bạn đã hoàn thành các bài thi thử trên TOEIC Exam Store. </i>
                                                 <br />
                                                 {exam && exam.part.length ? <>
                                                     <table className="table-question" style={{ border: 'none' }}>
@@ -2330,7 +2394,7 @@ function FullExam() {
                                                                         Listening: {pointListening}/50
                                                                     </th>
                                                                     <th className="right-answer"
-                                                                        style={{ color: '#d93425' }}>Score: {scoreListening}/495
+                                                                        style={{ color: '#d93425' }}>Điểm: {scoreListening}/495
                                                                     </th>
                                                                 </tr>
                                                             </> : <></>}
@@ -2342,7 +2406,7 @@ function FullExam() {
                                                                         <td><b>1 - 3</b></td>
                                                                         <td className="td-quest">Part I: Picture Description <b>({scorePartOne}/3)</b></td>
                                                                         <td className="td-right-answer">
-                                                                            <Link to="#" onClick={() => viewDetailsAndScroll(partOneRef)}>Details</Link>
+                                                                            <Link to="#" onClick={() => viewDetailsAndScroll(partOneRef)}>Chi tiết</Link>
                                                                         </td>
                                                                     </tr>
                                                                 </>
@@ -2354,7 +2418,7 @@ function FullExam() {
                                                                     <td className="td-quest">Part II: Question -
                                                                         Response <b>({scorePartTwo}/12)</b></td>
                                                                     <td className="td-right-answer">
-                                                                        <Link to="#" onClick={() => viewDetailsAndScroll(partTwoRef)}>Details</Link>
+                                                                        <Link to="#" onClick={() => viewDetailsAndScroll(partTwoRef)}>Chi tiết</Link>
                                                                     </td>
                                                                 </tr>
                                                             </> : <></>}
@@ -2365,7 +2429,7 @@ function FullExam() {
                                                                         Conversations <b>({scorePartThree}/20)</b></td>
 
                                                                     <td className="td-right-answer">
-                                                                        <Link to="#" onClick={() => viewDetailsAndScroll(partThreeRef)}>Details</Link>
+                                                                        <Link to="#" onClick={() => viewDetailsAndScroll(partThreeRef)}>Chi tiết</Link>
                                                                     </td>
                                                                 </tr>
                                                             </> : <></>}
@@ -2376,7 +2440,7 @@ function FullExam() {
                                                                         Talks <b>({scorePartFour}/15)</b></td>
 
                                                                     <td className="td-right-answer">
-                                                                        <Link to="#" onClick={() => viewDetailsAndScroll(partFourRef)}>Details</Link>
+                                                                        <Link to="#" onClick={() => viewDetailsAndScroll(partFourRef)}>Chi tiết</Link>
                                                                     </td>
                                                                 </tr>
                                                             </> : <></>}
@@ -2394,7 +2458,7 @@ function FullExam() {
                                                                         Reading: {pointReading}/50
                                                                     </th>
                                                                     <th className="right-answer"
-                                                                        style={{ color: '#d93425' }}>Score: {scoreReading}/495
+                                                                        style={{ color: '#d93425' }}>Điểm: {scoreReading}/495
                                                                     </th>
                                                                 </tr>
                                                             </> : <></>}
@@ -2407,7 +2471,7 @@ function FullExam() {
                                                                         Sentences <b>({scorePartFive}/30)</b></td>
 
                                                                     <td className="td-right-answer">
-                                                                        <Link to="#" onClick={viewDetails}>Details</Link>
+                                                                        <Link to="#" onClick={viewDetails}>Chi tiết</Link>
                                                                     </td>
                                                                 </tr>
                                                             </> : <></>}
@@ -2418,7 +2482,7 @@ function FullExam() {
                                                                         Sentences <b>({scorePartSix}/6)</b></td>
 
                                                                     <td className="td-right-answer">
-                                                                        <Link to="#" onClick={viewDetails}>Details</Link>
+                                                                        <Link to="#" onClick={viewDetails}>Chi tiết</Link>
                                                                     </td>
                                                                 </tr>
                                                             </> : <></>}
@@ -2429,7 +2493,7 @@ function FullExam() {
                                                                         Comprehension <b>({scorePartSeven}/14)</b></td>
 
                                                                     <td className="td-right-answer">
-                                                                        <Link to="#" onClick={viewDetails}>Details</Link>
+                                                                        <Link to="#" onClick={viewDetails}>Chi tiết</Link>
                                                                     </td>
                                                                 </tr>
                                                             </> : <></>}
@@ -2438,7 +2502,9 @@ function FullExam() {
                                                 </> : <></>}
                                                 <div className="text-center">
                                                     <Link to="#" onClick={e => handleExitExam(e)}
-                                                        className="mc-btn btn-style-6">Exit</Link>
+                                                        className="mc-btn btn-style-6">THOÁT</Link>
+                                                    <Link to="#" onClick={e => handleReloadExam(e)}
+                                                        className="mc-btn btn-style-6">LÀM LẠI BÀI TEST</Link>
                                                 </div>
                                                 <hr />
                                                 {0 <= (scoreListening + scoreReading) && (scoreListening + scoreReading) < 351 ?

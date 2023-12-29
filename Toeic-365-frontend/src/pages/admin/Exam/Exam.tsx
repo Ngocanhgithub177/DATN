@@ -260,7 +260,7 @@ export const Exam = () => {
 
     const header = (
         <div className="table-header">
-            <h5 className="p-m-0">Quản lý đề thi</h5>
+            <h5 className="p-m-0">QUẢN LÝ ĐỀ THI</h5>
             <span className="p-input-icon-left">
                 <i className="pi pi-search" />
                 <InputText type="search" onInput={(e: any) => setGlobalFilter(e.target.value)} placeholder="Tìm kiếm..." />
@@ -327,28 +327,28 @@ export const Exam = () => {
                         rowsPerPageOptions={[5, 10, 25]}
                         className="datatable-responsive"
                         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                        currentPageReportTemplate="Hiển thị {first} đến {last} trong tổng số {totalRecords} kỳ thi"
+                        currentPageReportTemplate="Hiển thị {first} đến {last} trong tổng số {totalRecords} đề thi"
                         globalFilter={globalFilter}
-                        emptyMessage="Không tìm thấy kỳ thi nào."
+                        emptyMessage="Không tìm thấy đề thi nào."
                         header={header}
                     >
                         <Column selectionMode="multiple" headerStyle={{ width: "3rem" }} />
-                        <Column field="examName" header="Tên" />
-                        <Column field="totalTime" body={totalTimeBody} header="Tổng Thời Gian" />
+                        <Column field="examName" header="Tên đề thi" />
+                        <Column field="totalTime" body={totalTimeBody} header="Tổng thời gian" />
                         <Column field="action" header="Hành Động" body={actionBodyTemplate} />
                     </DataTable>
 
-                    <Dialog visible={examDialog} style={{ width: "450px" }} header="Exam Details" modal
+                    <Dialog visible={examDialog} style={{ width: "450px" }} header="CHI TIẾT ĐỀ THI" modal
                         className="p-fluid" footer={examDialogFooter} onHide={hideDialog}>
                         <div className="p-field">
-                            <label htmlFor="examName">Name</label>
+                            <label htmlFor="examName">Tên đề thi</label>
                             <InputText id="examName" value={exam.examName}
                                 onChange={(e) => onInputChange(e, "examName")} required autoFocus
                                 className={classNames({ "p-invalid": submitted && !exam.examName })} />
                             {submitted && !exam.examName && <small className="p-invalid">name is required.</small>}
                         </div>
                         <div className="p-field">
-                            <label htmlFor="totalTime">Total Time</label><br />
+                            <label htmlFor="totalTime">Tổng thời gian</label><br />
                             <TimePicker onChange={e => onChangeTime(e, 'totalTime')} /> <br />
                             {submitted && !exam.totalTime && <small className="p-invalid">totalTime is required.</small>}
                         </div>
@@ -427,7 +427,7 @@ export const Exam = () => {
                             <i className="pi pi-exclamation-triangle p-mr-3" style={{ fontSize: "2rem" }} />
                             {exam && (
                                 <span>
-                                    Are you sure you want to delete <b>{exam.examName}</b> ?
+                                    Bạn có muốn xóa <b>{exam.examName}</b> ?
                                 </span>
                             )}
                         </div>

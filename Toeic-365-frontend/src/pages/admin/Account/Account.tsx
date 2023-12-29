@@ -218,7 +218,7 @@ export const Account = () => {
                         <Column body={actionBodyTemplate} />
                     </DataTable>
 
-                    <Dialog visible={AccountDialog} style={{ width: "450px" }} header="Chi Tiết Tài Khoản" modal className="p-fluid" footer={accountDialogFooter} onHide={hideDialog}>
+                    <Dialog visible={AccountDialog} style={{ width: "450px" }} header="CHI TIẾT TÀI KHOẢN" modal className="p-fluid" footer={accountDialogFooter} onHide={hideDialog}>
                         <div className="p-field">
                             <label htmlFor="fullName">Họ và Tên</label>
                             <InputText id="fullName" value={account.fullName} placeholder="Họ và Tên" onChange={(e) => onInputChange(e, "fullName")} required autoFocus className={classNames({ "p-invalid": submitted && !account.fullName })} />
