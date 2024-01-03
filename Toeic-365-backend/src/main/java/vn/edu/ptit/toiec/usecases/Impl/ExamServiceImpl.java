@@ -97,6 +97,7 @@ public class ExamServiceImpl implements ExamService {
         exam.setTotalTime(examRequest.getTotalTime());
 
         List<Part> parts = new ArrayList<>();
+        //lấy ra dữ liệu part one từ DB
         Part partOne = partRepository.findTopByNumberPart(examRequest.getNumberPartOne());
         Part partTwo = partRepository.findTopByNumberPart(examRequest.getNumberPartTwo());
         Part partThree = partRepository.findTopByNumberPart(examRequest.getNumberPartThree());

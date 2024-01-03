@@ -26,6 +26,19 @@ export const authHeader = () => {
     }
 }
 
+export const 
+authMultipartHeader = () => {
+    if (cookie.get(TOKEN_KEY)) {
+        return {
+            "Content-type": "multipart/form-data",
+            Accept: "*",
+            Authorization: "Bearer " + cookie.get(TOKEN_KEY)
+        };
+    } else {
+        return {};
+    }
+}
+
 
 // get api dssđ 
 export const getApi = (path: string, params: object): Promise<any> => {
@@ -58,6 +71,14 @@ export const deleteApi = (path: string, params: object): Promise<any> => {
         return axios.delete(baseUrl() + path, { data: params, headers: headers });
     }
     return axios.delete(baseUrl() + path, { data: params });
+}
+
+export const postApiMultipart = (path: string, body: object): Promise<object> => {
+    const headers = authMultipartHeader();
+    if (!isEmptyObject(headers)) {
+        return axios.post(baseUrl() + path, body, { headers: headers });
+    }
+    return axios.post(baseUrl() + path, body);
 }
 
 

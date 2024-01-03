@@ -79,10 +79,10 @@ function NavbarComponent() {
                                         <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                                             {user.roles[0] === 'ROLE_ADMIN' ? <Link className="dropdown-item" to="./admin"><i className="bi bi-person" /> Admin</Link> : <></>}
                                             {user.roles[0] === 'ROLE_USER' ? <Link className="dropdown-item" to="/history" >
-                                                Lịch Sử
+                                                History
                                             </Link> : <></>}
-                                            <a onClick={handleProfile} className="dropdown-item" ><i className="bi bi-person-fill" /> Thông Tin Cá Nhân</a>
-                                            <a onClick={handleLogout} className="dropdown-item" href="/"><i className="bi bi-box-arrow-right" />Đăng Xuất</a>
+                                            <a onClick={handleProfile} className="dropdown-item" ><i className="bi bi-person-fill" /> Profile</a>
+                                            <a onClick={handleLogout} className="dropdown-item" href="/"><i className="bi bi-box-arrow-right" /> Sign Out</a>
 
                                         </div>
                                     </li>

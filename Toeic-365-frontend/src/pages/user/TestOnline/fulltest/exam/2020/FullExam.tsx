@@ -44,7 +44,7 @@ function FullExam() {
     const [correctAnswerSubmit, setCorrectAnswerSubmit]: any = useState([]);
     const [isSubmit, SetIsSubmit]: any = useState(false);
     const [isShowResult, setIsShowResult] = useState(false);
-
+    const [scores,setScores] = useState<any>([]);
     const [scoreListening, setScoreListening]: any = useState(0);
     const [scoreReading, setScoreReading]: any = useState(0);
     const [pointListening, setPointListening]: any = useState(0);
@@ -62,11 +62,21 @@ function FullExam() {
     }
 
     useEffect(() => {
-        let userAnswers = {};
-        for (let i = 1; i < 101; i++) {
-            (userAnswers as any)["question_" + i] = "";
+        
+    }, [])
+
+
+    const getAllScore = async () => {
+        try {
+            const response = await HistoryApi.getAllScore();
+            setScores(response.data);
+        } catch (error) {
+            console.log(error.message);
         }
-        setUserAnswerChoose(userAnswers);
+    };
+
+    useEffect(() => {
+        getAllScore();
     }, [])
 
     const checkPoint1 = (userAnswers: any, answerCorrects: any) => {
@@ -80,7 +90,7 @@ function FullExam() {
         return point;*/
 
         let PartOne = 0;
-        for (let i = 1; i < 7; i++) {
+        for (let i = 1; i < 4; i++) {
             const valueChoice = userAnswers["question_" + i];
             if (valueChoice === answerCorrects[i - 1]) {
                 PartOne += 1;
@@ -92,7 +102,7 @@ function FullExam() {
 
     const checkPoint2 = (userAnswers: any, answerCorrects: any) => {
         let PartTwo = 0;
-        for (let i = 7; i < 33; i++) {
+        for (let i = 4; i < 16; i++) {
             const valueChoice = userAnswers["question_" + i];
             if (valueChoice === answerCorrects[i - 1]) {
                 PartTwo += 1;
@@ -104,7 +114,7 @@ function FullExam() {
 
     const checkPoint3 = (userAnswers: any, answerCorrects: any) => {
         let PartThree = 0;
-        for (let i = 33; i < 73; i++) {
+        for (let i = 16; i < 36; i++) {
             const valueChoice = userAnswers["question_" + i];
             if (valueChoice === answerCorrects[i - 1]) {
                 PartThree += 1;
@@ -116,7 +126,7 @@ function FullExam() {
 
     const checkPoint4 = (userAnswers: any, answerCorrects: any) => {
         let PartFour = 0;
-        for (let i = 73; i < 103; i++) {
+        for (let i = 36; i < 51; i++) {
             const valueChoice = userAnswers["question_" + i];
             if (valueChoice === answerCorrects[i - 1]) {
                 PartFour += 1;
@@ -128,7 +138,7 @@ function FullExam() {
 
     const checkPoint5 = (userAnswers: any, answerCorrects: any) => {
         let PartFive = 0;
-        for (let i = 103; i < 134; i++) {
+        for (let i = 51; i < 81; i++) {
             const valueChoice = userAnswers["question_" + i];
             if (valueChoice === answerCorrects[i - 1]) {
                 PartFive += 1;
@@ -140,7 +150,7 @@ function FullExam() {
 
     const checkPoint6 = (userAnswers: any, answerCorrects: any) => {
         let PartSix = 0;
-        for (let i = 135; i < 151; i++) {
+        for (let i = 81; i < 87; i++) {
             const valueChoice = userAnswers["question_" + i];
             if (valueChoice === answerCorrects[i - 1]) {
                 PartSix += 1;
@@ -152,7 +162,7 @@ function FullExam() {
 
     const checkPoint7 = (userAnswers: any, answerCorrects: any) => {
         let PartSeven = 0;
-        for (let i = 152; i < 207; i++) {
+        for (let i = 87; i < 101; i++) {
             const valueChoice = userAnswers["question_" + i];
             if (valueChoice === answerCorrects[i - 1]) {
                 PartSeven += 1;
@@ -503,16 +513,16 @@ function FullExam() {
                     setPointListening(pointLis);
                     setPointReading(pointRed);
 
-                    ScoreLis = Math.round(pointLis * 990) / 100;
-                    ScoreRed = Math.round((pointRed * 9.9) * 100) / 100;
+                    ScoreLis = scores.find((n : any) => n.check === pointLis && n.type).numberOfScore;
+                    ScoreRed = scores.find((n : any) => n.check === pointLis && !n.type).numberOfScore;
 
                     setScoreListening(ScoreLis);
                     setScoreReading(ScoreRed);
                     // @ts-ignore
                     let timeFormat = hiddenTimer ? hiddenTimer.innerText : 0;
-                    let timeSecond = formatTime(timeFormat / 1000);
+                    let timeSecond = formatTime(timeFormat);
                     // @ts-ignore
-                    handleSave(ScoreLis, ScoreRed, timing() - timeSecond);
+                    handleSave(ScoreLis, ScoreRed, (timing() - timeSecond) / 1000);
                     // @ts-ignore
                     hiddenTimer.setAttribute('style', 'display: none')
                 }
@@ -696,9 +706,9 @@ function FullExam() {
                                                         src={`${baseUrl()}/fileFolders/${exam.part[1].groupQuestion[0].audio}`} />
                                                 </audio>
                                                 <div className="row">
-                                                    {exam.part[1].groupQuestion[0].question.map((element: any,index : number) => {
-                                                         const collapseId = `collapse-${element.questionNumber}-${index}`;
-                                                         const accordionId = `accordion-${element.questionNumber}-${index}`;
+                                                    {exam.part[1].groupQuestion[0].question.map((element: any, index: number) => {
+                                                        const collapseId = `collapse-${element.questionNumber}-${index}`;
+                                                        const accordionId = `accordion-${element.questionNumber}-${index}`;
                                                         return (
                                                             <>
                                                                 <input className="hidden" id="correctAnswer"

@@ -7,6 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import vn.edu.ptit.toiec.core.security.UserPrinciple;
 import vn.edu.ptit.toiec.data.entities.HistoryExam;
+import vn.edu.ptit.toiec.data.repository.ScoreRepository;
 import vn.edu.ptit.toiec.presentation.model.HistoryExamRequest;
 import vn.edu.ptit.toiec.presentation.model.HistoryExamResponse;
 import vn.edu.ptit.toiec.usecases.HistoryExamService;
@@ -20,6 +21,7 @@ import java.util.List;
 public class HistoryExamController {
     @Autowired
     private HistoryExamService historyExamService;
+
 
     @GetMapping()
     public ResponseEntity<List<HistoryExamResponse>> getAll(){

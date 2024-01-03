@@ -193,8 +193,8 @@ export const Part = () => {
 
     const partDialogFooter = (
         <>
-            <Button label="Cancel" icon="pi pi-times" className="p-button-text" onClick={hideDialog} />
-            <Button label="Save" icon="pi pi-check" className="p-button-text" onClick={savePart} />
+            <Button label="Hủy bỏ" icon="pi pi-times" className="p-button-text" onClick={hideDialog} />
+            <Button label="Lưu" icon="pi pi-check" className="p-button-text" onClick={savePart} />
         </>
     );
 
@@ -256,8 +256,8 @@ export const Part = () => {
                         header={header}
                     >
                         <Column selectionMode="multiple" headerStyle={{ width: "3rem" }} />
-                        <Column field="numberPart" header="Thứ tự phần thi" />
-                        <Column field="partName" header="Tên phần thi" />
+                        <Column field="numberPart" header="Tên phần thi" />
+                        <Column field="partName" header="Loại phần thi" />
                         <Column field="partDesc" header="Mô tả phần thi" body={descriptionBody} />
                         <Column field="action" header="Hành động" body={actionBodyTemplate} />
                     </DataTable>
@@ -265,14 +265,14 @@ export const Part = () => {
                     <Dialog visible={partDialog} style={{ width: "450px" }} header="CHI TIẾT PHẦN THI" modal className="p-fluid" footer={partDialogFooter} onHide={hideDialog}>
                         <form>
                             <div className="p-field">
-                                <label htmlFor="numberPart">Thứ tự phần thi</label>
+                                <label htmlFor="numberPart">Tên phần thi</label>
                                 <InputText id="numberPart" disabled={type === "update"} value={part.numberPart} onChange={(e) => onInputChange(e, "numberPart")} autoFocus={true} className={classNames({ "p-invalid": submitted && !part.numberPart })} />
-                                {submitted && !part.numberPart && <small className="p-invalid" style={{ color: '#f44336' }}>Thứ tự phần thi là bắt buộc.</small>}
+                                {submitted && !part.numberPart && <small className="p-invalid" style={{ color: '#f44336' }}>Tên phần thi là bắt buộc.</small>}
                             </div>
                             <div className="p-field">
-                                <label htmlFor="partName">Tên phần thi</label>
+                                <label htmlFor="partName">Loại phần thi</label>
                                 <Dropdown value={partNameValue} onChange={(e: any) => handlePartNameChange(e, "partName")} options={partNameValues} optionLabel="partName" placeholder={isUpdate ? part.partName : "Chọn một"} className={classNames({ "p-invalid": submitted && !part.partName })} />
-                                {submitted && !part.partName && <small className="p-invalid" style={{ color: '#f44336' }}>Tên là bắt buộc.</small>}
+                                {submitted && !part.partName && <small className="p-invalid" style={{ color: '#f44336' }}>Loại phần thi là bắt buộc.</small>}
                             </div>
                             <div className="p-field">
                                 <label htmlFor="partDesc">Mô tả phần thi</label>

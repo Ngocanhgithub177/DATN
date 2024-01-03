@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import vn.edu.ptit.toiec.data.entities.Flashcard;
+import vn.edu.ptit.toiec.data.entities.TypeWord;
 import vn.edu.ptit.toiec.data.repository.FlashCardRepository;
+import vn.edu.ptit.toiec.data.repository.TypeWordRepository;
 import vn.edu.ptit.toiec.usecases.FlashCardService;
 
 import java.util.List;
@@ -13,9 +15,16 @@ import java.util.List;
 public class FlashCardServiceImpl implements FlashCardService {
     @Autowired
     private FlashCardRepository flashCardRepository;
+    @Autowired
+    private TypeWordRepository typeWordRepository;
     @Override
     public List<Flashcard> getAll() {
-        return flashCardRepository.findAll();
+        List<Flashcard> list = flashCardRepository.findAll();
+        for(int i = 0;i < list.size();i++){
+            TypeWord typeWord = typeWordRepository.findById(Long.valueOf(list.get(i).getTypeword())).get();
+            list.get(i).setTypewordName(typeWord.getName());
+        }
+        return list;
     }
 
     @Override

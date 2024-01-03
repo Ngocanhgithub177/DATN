@@ -76,7 +76,7 @@ function Login() {
                                 </div>
                                 <fieldset className="form-group">
                                     <div className="d-flex justify-content-between">
-                                        <label htmlFor="password">Password</label>
+                                        <label htmlFor="password">Mật Khẩu</label>
                                     </div>
                                     <span>
                                         <span className="input-group input-group-merge">

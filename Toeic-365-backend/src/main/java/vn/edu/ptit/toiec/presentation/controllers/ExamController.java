@@ -34,7 +34,6 @@ public class ExamController {
     public ResponseEntity<List<Exam>> getAllExams() {
         return new ResponseEntity<>(examService.getAllExams(), HttpStatus.OK);
     }
-
     @GetMapping("/name")
     public ResponseEntity<List<ExamResponse>> getAllExam() {
         return new ResponseEntity<>(examService.getAllExam(), HttpStatus.OK);

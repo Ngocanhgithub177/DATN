@@ -15,6 +15,7 @@ import classNames from "classnames";
 
 import * as PartApi from "../../../apis/PartApi";
 import * as ExamApi from "../../../apis/ExamApi";
+import { Option } from "antd/lib/mentions";
 
 export const Exam = () => {
 
@@ -270,8 +271,8 @@ export const Exam = () => {
 
     const examDialogFooter = (
         <>
-            <Button label="Cancel" icon="pi pi-times" className="p-button-text" onClick={hideDialog} />
-            <Button label="Save" icon="pi pi-check" className="p-button-text" onClick={saveExam} />
+            <Button label="Hủy bỏ" icon="pi pi-times" className="p-button-text" onClick={hideDialog} />
+            <Button label="Lưu" icon="pi pi-check" className="p-button-text" onClick={saveExam} />
         </>
     );
 
@@ -358,7 +359,7 @@ export const Exam = () => {
                                 value={numberPartOne}
                                 onChange={(e) => onNumberPartOneChange(e, "numberPartOne")}
                                 options={numberPartOnes} optionLabel="numberPart"
-                                placeholder={"Select One"}
+                                placeholder="Chọn một"
                                 className={classNames({ "p-invalid": submitted && !exam.numberPartOne })}
                             />
                             {submitted && !exam.numberPartOne && <small className="p-invalid">number part one is required.</small>}
@@ -368,7 +369,7 @@ export const Exam = () => {
                             <Dropdown id="numberPartTwo" value={numberPartTwo}
                                 onChange={(e) => onNumberPartTwoChange(e, "numberPartTwo")}
                                 options={numberPartTwos} optionLabel="numberPart"
-                                placeholder={"Select One"}
+                                placeholder="Chọn một"
                                 className={classNames({ "p-invalid": submitted && !exam.numberPartTwo })}
                             />
                             {submitted && !exam.numberPartTwo && <small className="p-invalid">number part two is required.</small>}
@@ -378,7 +379,7 @@ export const Exam = () => {
                             <Dropdown value={numberPartThree}
                                 onChange={(e) => onNumberPartThreeChange(e, "numberPartThree")}
                                 options={numberPartThrees} optionLabel="numberPart"
-                                placeholder="Select One"
+                                placeholder="Chọn một"
                                 className={classNames({ "p-invalid": submitted && !exam.numberPartThree })}
                             />
                             {submitted && !exam.numberPartThree && <small className="p-invalid">number part three is required.</small>}
@@ -387,7 +388,7 @@ export const Exam = () => {
                             <label htmlFor="numberPartFour">Part IV</label>
                             <Dropdown value={numberPartFour}
                                 onChange={(e) => onNumberPartFourChange(e, "numberPartFour")}
-                                options={numberPartFours} optionLabel="numberPart" placeholder="Select One"
+                                options={numberPartFours} optionLabel="numberPart" placeholder="Chọn một"
                                 className={classNames({ "p-invalid": submitted && !exam.numberPartFour })}
                             />
                             {submitted && !exam.numberPartThree && <small className="p-invalid">number part four is required.</small>}
@@ -397,7 +398,7 @@ export const Exam = () => {
                             <label htmlFor="numberPartFive">Part V</label>
                             <Dropdown value={numberPartFive}
                                 onChange={(e) => onNumberPartFiveChange(e, "numberPartFive")}
-                                options={numberPartFives} optionLabel="numberPart" placeholder="Select One"
+                                options={numberPartFives} optionLabel="numberPart" placeholder="Chọn một"
                                 className={classNames({ "p-invalid": submitted && !exam.numberPartFive })}
                             />
                             {submitted && !exam.numberPartThree && <small className="p-invalid">number part five is required.</small>}
@@ -405,7 +406,7 @@ export const Exam = () => {
                         <div className="p-field">
                             <label htmlFor="numberPartSix">Part VI</label>
                             <Dropdown value={numberPartSix} onChange={(e) => onNumberPartSixChange(e, "numberPartSix")}
-                                options={numberPartSixs} optionLabel="numberPart" placeholder="Select One"
+                                options={numberPartSixs} optionLabel="numberPart" placeholder="Chọn một"
                                 className={classNames({ "p-invalid": submitted && !exam.numberPartSix })}
                             />
                             {submitted && !exam.numberPartThree && <small className="p-invalid">number part six is required.</small>}
@@ -414,7 +415,7 @@ export const Exam = () => {
                             <label htmlFor="numberPartSeven">Part VII</label>
                             <Dropdown value={numberPartSeven}
                                 onChange={(e) => onNumberPartSevenChange(e, "numberPartSeven")}
-                                options={numberPartSevens} optionLabel="numberPart" placeholder="Select One"
+                                options={numberPartSevens} optionLabel="numberPart" placeholder="Chọn một"
                                 className={classNames({ "p-invalid": submitted && !exam.numberPartSeven })}
                             />
                             {submitted && !exam.numberPartSeven && <small className="p-invalid">number part seven is required.</small>}

@@ -151,8 +151,8 @@ export default class PartV2 extends React.Component<any, any> {
 
     private partDialogFooter = (
         <>
-            <Button label="Cancel" icon="pi pi-times" className="p-button-text" onClick={this.hideDialog}/>
-            <Button label="Save" icon="pi pi-check" className="p-button-text" onClick={this.savePart}/>
+            <Button label="Hủy bỏ" icon="pi pi-times" className="p-button-text" onClick={this.hideDialog}/>
+            <Button label="Lưu" icon="pi pi-check" className="p-button-text" onClick={this.savePart}/>
         </>
     );
     render= () => {

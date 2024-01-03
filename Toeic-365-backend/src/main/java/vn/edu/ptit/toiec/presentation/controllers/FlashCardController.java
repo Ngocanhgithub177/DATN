@@ -29,12 +29,12 @@ public class FlashCardController {
         return new ResponseEntity<>(flashCardService.getAll(), HttpStatus.OK);
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<Flashcard> create(@RequestPart("image") MultipartFile image,
-                                            @RequestPart("word") String word,
-                                            @RequestPart("content") String content,
-                                            @RequestPart("nouns") String nouns,
-                                            @RequestPart("typeword") Integer typeword)
+    @PostMapping(value = "/create",consumes = {"multipart/form-data"})
+    public ResponseEntity<Flashcard> create(@RequestParam("image") MultipartFile image,
+                                            @RequestParam("word") String word,
+                                            @RequestParam("content") String content,
+                                            @RequestParam("nouns") String nouns,
+                                            @RequestParam("typeword") Integer typeword)
     {
         try {
             String file = fileUpload.uploadFile(image);
@@ -52,12 +52,12 @@ public class FlashCardController {
     }
 
     @PostMapping("/update")
-    public ResponseEntity<Flashcard> update(@RequestPart("image") MultipartFile image,
-                                            @RequestPart("word") String word,
-                                            @RequestPart("content") String content,
-                                            @RequestPart("nouns") String nouns,
-                                            @RequestPart("typeword") Integer typeword,
-                                            @RequestPart("id") Integer id)
+    public ResponseEntity<Flashcard> update(@RequestParam("image") MultipartFile image,
+                                            @RequestParam("word") String word,
+                                            @RequestParam("content") String content,
+                                            @RequestParam("nouns") String nouns,
+                                            @RequestParam("typeword") Integer typeword,
+                                            @RequestParam("id") Integer id)
     {
         try {
             String file = fileUpload.uploadFile(image);

@@ -176,15 +176,15 @@ export const Account = () => {
 
     const accountDialogFooter = (
         <>
-            <Button label="Cancel" icon="pi pi-times" className="p-button-text" onClick={hideDialog} />
-            <Button label="Save" icon="pi pi-check" className="p-button-text" onClick={saveAccount} />
+            <Button label="Hủy bỏ" icon="pi pi-times" className="p-button-text" onClick={hideDialog} />
+            <Button label="Lưu" icon="pi pi-check" className="p-button-text" onClick={saveAccount} />
         </>
     );
 
     const deleteAccountDialogFooter = (
         <>
-            <Button label="No" icon="pi pi-times" className="p-button-text" onClick={hideDeleteAccountDialog} />
-            <Button label="Yes" icon="pi pi-check" className="p-button-text" onClick={deleteAccount} />
+            <Button label="Không" icon="pi pi-times" className="p-button-text" onClick={hideDeleteAccountDialog} />
+            <Button label="Có" icon="pi pi-check" className="p-button-text" onClick={deleteAccount} />
         </>
     );
 

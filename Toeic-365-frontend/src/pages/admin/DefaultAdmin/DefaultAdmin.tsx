@@ -30,6 +30,7 @@ import "../../../assets/scss/admin/DefaultAdmin.scss";
 import "../../../assets/scss/admin/defaultAdminCustom.scoped.css";
 
 import Logo from "./assets/logo_toeic365.png";
+import { Flashcard } from "../Flashcard/Flashcard";
 
 export const DefaultAdmin = () => {
 
@@ -93,7 +94,8 @@ export const DefaultAdmin = () => {
         {label: "Quản Lý Phần Thi", icon: "pi pi-fw pi-list", to: "/admin/part"},
         {label: "Quản Lý Nhóm Câu Hỏi", icon: "pi pi-fw pi-question-circle", to: "/admin/group-question"},
         {label: "Quản Lý Câu Hỏi", icon: "pi pi-fw pi-question-circle", to: "/admin/question"},
-        {label: "Quản Lý Tài Khoản", icon: "pi pi-fw pi-user", to: "/admin/account"}
+        {label: "Quản Lý Tài Khoản", icon: "pi pi-fw pi-user", to: "/admin/account"},
+        {label: "Quản Lý Từ Vựng", icon: "pi pi-fw pi-info", to: "/admin/flashcard"}
     ];
 
     const addClass = (element: any, className: any) => {
@@ -159,6 +161,7 @@ export const DefaultAdmin = () => {
                     <Route path="/admin/question" exact component={Question}/>
                     <Route path="/admin/account" exact component={Account}/>
                     <Route path="/admin/me" exact component={Profile}/>
+                    <Route path="/admin/flashcard" exact component={Flashcard}/>
                 </div>
 
                 <AdminFooter/>

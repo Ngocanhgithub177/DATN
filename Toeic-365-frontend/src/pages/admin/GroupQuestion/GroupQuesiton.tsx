@@ -268,8 +268,8 @@ export const GroupQuestion = () => {
 
     const groupQuestionDialogFooter = (
         <>
-            <Button label="Cancel" icon="pi pi-times" className="p-button-text" onClick={hideDialog} />
-            <Button label="Save" icon="pi pi-check" className="p-button-text" onClick={saveGroupQuestion} />
+            <Button label="Hủy bỏ" icon="pi pi-times" className="p-button-text" onClick={hideDialog} />
+            <Button label="Lưu" icon="pi pi-check" className="p-button-text" onClick={saveGroupQuestion} />
         </>
     );
 
@@ -341,7 +341,7 @@ export const GroupQuestion = () => {
                         header={header}
                     >
                         <Column selectionMode="multiple" headerStyle={{ width: "3rem" }} />
-                        <Column field="numberPart" header="Thứ tự phần thi " />
+                        <Column field="numberPart" header="Tên phần thi " />
                         <Column field="title" header="Tiêu Đề" />
                         <Column field="groupQuestionDesc" header="Mô Tả" body={descriptionBody} />
                         <Column field="groupQuestionImg" header="Hình Ảnh" />
@@ -353,14 +353,14 @@ export const GroupQuestion = () => {
                     <Dialog visible={groupQuestionDialog} style={{ width: "450px" }} header="CHI TIẾT NHÓM CÂU HỎI" modal
                         className="p-fluid" footer={groupQuestionDialogFooter} onHide={hideDialog}>
                         <div className="p-field">
-                            <label htmlFor="numberPart">Thứ tự phần thi</label>
+                            <label htmlFor="numberPart">Tên phần thi</label>
                             <Dropdown id="numberPart" disabled={type === 'update'} value={numberPartItem}
                                 onChange={(e) => handleNumberPartChange(e, "numberPart")}
                                 options={numberPartItems} optionLabel="numberPart"
                                 placeholder={isUpdate ? groupQuestion.numberPart : "Chọn một"} autoFocus
                                 className={classNames({ "p-invalid": submitted && !groupQuestion.numberPart })} />
                             {submitted && !groupQuestion.numberPart &&
-                                <small className="p-invalid" style={{ color: '#f44336' }}>Thứ tự phần thi là bắt buộc.</small>}
+                                <small className="p-invalid" style={{ color: '#f44336' }}>Tên phần thi là bắt buộc.</small>}
                         </div>
                         <div className="p-field">
                             <label htmlFor="title">Tiêu đề</label>

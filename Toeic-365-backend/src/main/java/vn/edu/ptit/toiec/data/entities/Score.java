@@ -6,23 +6,20 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Date;
+import java.util.List;
 
 @Entity
-@Table(name = "flashcard")
+@Table(name = "score")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Flashcard {
+public class Score {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String word;
-    private String content;
-    private String image;
-    private String nouns;
-    @Column(name = "typeword_id")
-    private Integer typeword;
-    @Transient
-    private String typewordName;
+    private Integer check;
+    private Integer numberOfScore;
+    private Boolean type;
 }

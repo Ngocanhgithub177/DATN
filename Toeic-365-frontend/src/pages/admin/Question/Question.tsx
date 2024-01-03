@@ -62,7 +62,6 @@ function Question() {
         const getAllQuestions = async () => {
             try {
                 const response = await QuestionApi.getAllQuestions();
-
                 setQuestions(response.data);
             } catch (error) {
                 console.log(error.message);
@@ -241,8 +240,8 @@ function Question() {
 
     const questionDialogFooter = (
         <>
-            <Button label="Cancel" icon="pi pi-times" className="p-button-text" onClick={hideDialog} />
-            <Button label="Save" icon="pi pi-check" className="p-button-text" onClick={SaveQuestion} />
+            <Button label="Hủy bỏ" icon="pi pi-times" className="p-button-text" onClick={hideDialog} />
+            <Button label="Lưu" icon="pi pi-check" className="p-button-text" onClick={SaveQuestion} />
         </>
     );
 
@@ -277,8 +276,8 @@ function Question() {
 
     const deleteQuestionDialogFooter = (
         <>
-            <Button label="No" icon="pi pi-times" className="p-button-text" onClick={hideDeleteQuestionDialog} />
-            <Button label="Yes" icon="pi pi-check" className="p-button-text" onClick={deleteQuestion} />
+            <Button label="Không" icon="pi pi-times" className="p-button-text" onClick={hideDeleteQuestionDialog} />
+            <Button label="Có" icon="pi pi-check" className="p-button-text" onClick={deleteQuestion} />
         </>
     );
 
@@ -374,7 +373,7 @@ function Question() {
                         header={header}
                     >
                         <Column selectionMode="multiple" headerStyle={{ width: "3rem" }} />
-                        <Column field="numberPart" header="Thứ tự phần thi" body={numberPartBody} />
+                        <Column field="numberPart" header="Tên phần thi" body={numberPartBody} />
                         <Column field="title" header="Tiêu đề" body={titleBody} sortable />
                         <Column field="question-number" header="Số câu hỏi" body={questionNumberBody} />
                         <Column field="question-content" header="Nội dung câu hỏi" body={questionContentBody} />
@@ -389,7 +388,7 @@ function Question() {
                     <Dialog visible={questionDialog} style={{ width: "450px" }} header="CHI TIẾT CÂU HỎI" modal
                         className="p-fluid" footer={questionDialogFooter} onHide={hideDialog}>
                         <div className="p-field">
-                            <label htmlFor="numberPart">Thứ tự phần thi</label>
+                            <label htmlFor="numberPart">Tên phần thi</label>
                             <Dropdown id="numberPart" disabled={type === 'update'} value={numberPartItem}
                                 onChange={(e) => handleNumberPartChange(e)} options={numberPartItems}
                                 optionLabel="numberPart"
